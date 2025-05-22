@@ -1,4 +1,4 @@
-function [prices] = parsiminious_mixed_two_factor_bergomi( )
+function [prices] = parsimonious_mixed_two_factor_bergomi( )
 
 eta_omega = 4.910; epsilon_omega = 14.128; beta_omega = 11.512; delta_omega = 0.727; % omega 1
 eta_gamma = 8.748; epsilon_gamma = 19.173; beta_gamma = 2.336; delta_gamma = 2.0; % gamma
