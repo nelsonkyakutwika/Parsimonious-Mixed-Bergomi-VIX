@@ -1,11 +1,13 @@
-function [prices] = parsimonious_mixed_two_factor_bergomi( )
+% Quantizer and probabilities
+X12_quantizer = load("qpoints_1450");
+X12_quantizer(end, :) = [];
 
-eta_omega = 4.910; epsilon_omega = 14.128; beta_omega = 11.512; delta_omega = 0.727; % omega 1
+eta_omega = 4.910; epsilon_omega = 14.128; beta_omega = 11.512; delta_omega = 0.727; % omega 
 eta_gamma = 8.748; epsilon_gamma = 19.173; beta_gamma = 2.336; delta_gamma = 2.0; % gamma
 nu = 1.171; % nu
 
 
-k1 = 7.54; k2 = 0.24; rho = 0.7; theta = 0.23;
+k1 = 9.06; k2 = 0.32; theta = 0.233; rho = 0.4;
 
 % flat forward variance
 xi0 = 0.03; rate = 0.0559;
@@ -27,10 +29,6 @@ nume = rho * ((1 - exp( -(k1 + k2) * t)) / (k1 + k2));
 SD_X1 = sqrt((1 - exp(-2 * k1 * t)) / (2 * k1));
 SD_X2 = sqrt((1 - exp(-2 * k2 * t)) / (2 * k2));
 rho12 = nume / (SD_X1 * SD_X2);
-
-% Quantizer and probabilities
-X12_quantizer = load("qpoints_1450");
-X12_quantizer(end, :) = [];
 
 % Extract probabilities and quantization points
 Probs = X12_quantizer(:, 1);
@@ -101,4 +99,4 @@ ylabel('Implied volatility','FontSize',22)
 prices.model_future_price = model_future_price;
 prices.model_call_prices = model_call_prices;
 
-end
+
