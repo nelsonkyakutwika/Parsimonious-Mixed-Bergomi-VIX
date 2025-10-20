@@ -1,15 +1,15 @@
 
+% Quantizer and probabilities
+X_quantizer = load("qpoints_1000");
+X_quantizer(end, :) = [];
 
-function [prices] = parsimonious_mixed_one_factor_bergomi( )
-
-eta_omega = 5.492; epsilon_omega = 14.087; beta_omega = 7.118; delta_omega = 0.929; % omega 1
-
+eta_omega = 5.492; epsilon_omega = 14.087; beta_omega = 7.118; delta_omega = 0.929; % omega
 eta_gamma = 6.870; epsilon_gamma = 16.121; beta_gamma = 2.188; delta_gamma = 1.523; % gamma
 
 nu =  0.760; % nu
 
 % Model parameter
-k = 1;
+k = 1.06;
 
 % flat forward variance
 xi0 = 0.03; rate = 0.0559;
@@ -23,10 +23,6 @@ omega1 = eta_omega*exp(-epsilon_omega*T1) + beta_omega*exp(-delta_omega*T1);
 
 gamma = eta_gamma*exp(-epsilon_gamma*T1) + beta_gamma*exp(-delta_gamma*T1);
 gamma = gamma/(1+gamma);
-
-% Quantizer and probabilities
-X_quantizer = load("qpoints_1000");
-X_quantizer(end, :) = [];
 
 % Extract probabilities and quantization points
 Probs = X_quantizer(:, 1);
@@ -48,7 +44,6 @@ x_tT = exp(-k * (T - t)) * SD_X * quant_points';
 % Compute f(t, X)
 f_tT =  (1 - gamma) * exp(omega1 * x_tT - 0.5 * omega1^2 * h_tT) + ...
     gamma * exp(nu * x_tT - 0.5 * nu^2 * h_tT);
-
 
 % Compute V(t, T1, T2) and model futures price
 V_t_T1_T2 = 10000*xi0 * sum(W .* f_tT, 1) / (T2 - T1);
@@ -93,4 +88,5 @@ ylabel('Implied volatility','FontSize',22)
 
 prices.model_future_price = model_future_price;
 prices.model_call_prices = model_call_prices;
-end
+
+
